@@ -1,11 +1,12 @@
 package com.demo.banco.controller.contracts.request;
 
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserRequest {
 
     private String name;

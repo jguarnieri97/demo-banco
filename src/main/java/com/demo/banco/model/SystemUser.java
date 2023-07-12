@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "SYS_USER")
@@ -17,7 +16,7 @@ public abstract class SystemUser {
 
     @Id
     @Column(name = "user_id")
-    private UUID id;
+    private String id;
 
     private String password;
 
@@ -33,7 +32,7 @@ public abstract class SystemUser {
     private boolean isActive;
 
     public SystemUser(String password, ZonedDateTime created, boolean isActive) {
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
         this.password = password;
         this.created = created;
         this.isActive = isActive;
@@ -41,10 +40,6 @@ public abstract class SystemUser {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 
     public void setLastLogin(ZonedDateTime lastLogin) {

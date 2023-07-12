@@ -1,5 +1,6 @@
 package com.demo.banco.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ public class Phone {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;

@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "BANK_USER")
@@ -23,7 +22,7 @@ public class User extends SystemUser {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Phone> phones;
 
-    public User(String password, ZonedDateTime created, boolean isActive, String name, String email) {
+    public User(String name, String email, String password, ZonedDateTime created, boolean isActive) {
         super(password, created, isActive);
         this.name = name;
         this.email = email;
