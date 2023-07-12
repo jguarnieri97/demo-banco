@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "SYS_USER")
@@ -49,4 +50,5 @@ public abstract class SystemUser {
     public void setLastLogin(ZonedDateTime lastLogin) {
         this.lastLogin = lastLogin;
     }
+
 }
