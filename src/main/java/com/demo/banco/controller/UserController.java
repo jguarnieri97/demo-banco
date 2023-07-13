@@ -24,15 +24,12 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse registerUser(@RequestBody UserRequest request) {
-        try {
-            User user = userService.registerUser(request);
-            UserResponse response = mapper.convertValue(user, UserResponse.class);
-            response.setPassword(user.getAuthInfo().getPassword());
-            response.setToken(user.getAuthInfo().getToken());
-            return response;
-        } catch (RegisterUserException e) {
-            throw new RegisterUserException(e.getMessage());
-        }
+        User user = userService.registerUser(request);
+        UserResponse response = mapper.convertValue(user, UserResponse.class);
+        response.setPassword(user.getAuthInfo().getPassword());
+        response.setToken(user.getAuthInfo().getToken());
+        return response;
+
     }
 
 }

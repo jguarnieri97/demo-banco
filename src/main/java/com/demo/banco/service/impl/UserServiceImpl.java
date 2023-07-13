@@ -2,6 +2,7 @@ package com.demo.banco.service.impl;
 
 import com.demo.banco.controller.contracts.request.UserRequest;
 import com.demo.banco.exceptions.RegisterUserException;
+import com.demo.banco.exceptions.UserAlreadyExistException;
 import com.demo.banco.helpers.Encrypter;
 import com.demo.banco.helpers.TokenService;
 import com.demo.banco.model.Phone;
@@ -27,11 +28,18 @@ public class UserServiceImpl implements UserService {
         this.tokenService = tokenService;
     }
 
+    /**
+     * Register new User
+     *
+     * @param request the user to be stored
+     * @return user created
+     */
     @Override
     public User registerUser(UserRequest request) {
 
         if (!isValidEmail(request.getEmail())) throw new RegisterUserException("Incorrect email");
         if (!isValidPassword(request.getPassword())) throw new RegisterUserException("Incorrect password");
+        if (checkIfUserExist(request.getEmail())) throw new UserAlreadyExistException(request.getEmail());
 
         User user = new User(
                 request.getName(),
@@ -68,6 +76,10 @@ public class UserServiceImpl implements UserService {
      */
     private boolean isValidPassword(String password) {
         return Pattern.matches("^(?=(.*[a-z])*)(?=(.*[A-Z]))(?=(.*\\d){2}).{8,12}+$", password);
+    }
+
+    private boolean checkIfUserExist(String email) {
+        return repository.existsByEmail(email);
     }
 
 }
