@@ -1,3 +1,7 @@
+server:
+  error:
+    include-message: always
+
 spring:
   application.name: demo-banco-api_dev-h2
   datasource:
@@ -9,3 +13,4 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     open-in-view: false
   h2.console.enabled: true
+
