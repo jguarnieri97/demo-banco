@@ -45,7 +45,6 @@ public class UserServiceImpl implements UserService {
             user.addPhone(new Phone(user, phone.getNumber(), phone.getCitycode(), phone.getCountrycode()));
         });
 
-        //encrypt password
         //setToken
 
         return repository.save(user);

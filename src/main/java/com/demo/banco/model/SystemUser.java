@@ -18,28 +18,28 @@ public abstract class SystemUser {
     @Column(name = "user_id")
     private String id;
 
-    private String password;
-
     @Column(name = "created_at")
     private ZonedDateTime created;
 
     @Column(name = "last_login")
     private ZonedDateTime lastLogin;
 
-    private String token;
-
     @Column(name = "is_active")
     private boolean isActive;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "auth_id", referencedColumnName = "id")
+    private AuthInfo authInfo;
+
     public SystemUser(String password, ZonedDateTime created, boolean isActive) {
         this.id = UUID.randomUUID().toString();
-        this.password = password;
+        this.authInfo = new AuthInfo(this, password);
         this.created = created;
         this.isActive = isActive;
     }
 
     public void setToken(String token) {
-        this.token = token;
+        this.authInfo.setToken(token);
     }
 
     public void setLastLogin(ZonedDateTime lastLogin) {
