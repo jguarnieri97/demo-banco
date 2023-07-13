@@ -1,15 +1,12 @@
 package com.demo.banco.controller.contracts.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import lombok.Data;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class UserResponse {
 
     private String id;

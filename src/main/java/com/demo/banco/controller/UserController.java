@@ -2,6 +2,7 @@ package com.demo.banco.controller;
 
 import com.demo.banco.controller.contracts.request.UserRequest;
 import com.demo.banco.controller.contracts.response.UserResponse;
+import com.demo.banco.model.User;
 import com.demo.banco.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse registerUser(@RequestBody UserRequest request) {
         try {
-            return mapper.convertValue(userService.registerUser(request), UserResponse.class);
+            User user = userService.registerUser(request);
+            UserResponse response = mapper.convertValue(user, UserResponse.class);
+            response.setPassword(user.getAuthInfo().getPassword());
+            response.setToken(user.getAuthInfo().getToken());
+            return response;
         } catch (StackOverflowError | IllegalArgumentException e) {
             throw new RuntimeException(e.getMessage());
         }

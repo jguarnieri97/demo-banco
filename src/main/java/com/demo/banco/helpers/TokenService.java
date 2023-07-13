@@ -4,4 +4,6 @@ import org.springframework.stereotype.Component;
 
 public interface TokenService {
 
+    String generateToken(String name, String email);
+
 }

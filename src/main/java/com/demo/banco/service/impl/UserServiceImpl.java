@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registerUser(UserRequest request) {
 
-        if(!isValidEmail(request.getEmail())) throw new RegisterUserException("Incorrect email");
-        if(!isValidPassword(request.getPassword())) throw new RegisterUserException("Incorrect password");
+        if (!isValidEmail(request.getEmail())) throw new RegisterUserException("Incorrect email");
+        if (!isValidPassword(request.getPassword())) throw new RegisterUserException("Incorrect password");
 
         User user = new User(
                 request.getName(),
@@ -45,13 +45,14 @@ public class UserServiceImpl implements UserService {
             user.addPhone(new Phone(user, phone.getNumber(), phone.getCitycode(), phone.getCountrycode()));
         });
 
-        //setToken
+        user.setToken(tokenService.generateToken(user.getName(), user.getEmail()));
 
         return repository.save(user);
     }
 
     /**
      * Validate in RFC-5322
+     *
      * @param email The email to validate
      * @return if is valid return true
      */
@@ -61,6 +62,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Validate password with only one capital, two numbers and size between 8-12
+     *
      * @param password The password to validate
      * @return if is valid return true
      */
