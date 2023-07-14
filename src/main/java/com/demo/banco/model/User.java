@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class User extends SystemUser {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Phone> phones;
 
-    public User(String name, String email, String password, ZonedDateTime created, boolean isActive) {
+    public User(String name, String email, String password, LocalDateTime created, boolean isActive) {
         super(password, created, isActive);
         this.name = name;
         this.email = email;

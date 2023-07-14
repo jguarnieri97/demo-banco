@@ -3,7 +3,6 @@ package com.demo.banco.service.impl;
 import com.demo.banco.controller.contracts.request.UserRequest;
 import com.demo.banco.exceptions.AuthNotFoundException;
 import com.demo.banco.exceptions.RegisterUserException;
-import com.demo.banco.exceptions.UserAlreadyExistException;
 import com.demo.banco.exceptions.UserNotFoundException;
 import com.demo.banco.helpers.Encrypter;
 import com.demo.banco.helpers.TokenService;
@@ -15,8 +14,8 @@ import com.demo.banco.persistance.UserRepository;
 import com.demo.banco.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
@@ -46,13 +45,12 @@ public class UserServiceImpl implements UserService {
 
         if (!isValidEmail(request.getEmail())) throw new RegisterUserException("Incorrect email");
         if (!isValidPassword(request.getPassword())) throw new RegisterUserException("Incorrect password");
-        if (checkIfUserExist(request.getEmail())) throw new UserAlreadyExistException(request.getEmail());
 
         User user = new User(
                 request.getName(),
                 request.getEmail(),
                 encrypter.encryptPassword(request.getPassword()),
-                ZonedDateTime.now(),
+                LocalDateTime.now(),
                 IS_ACTIVE
         );
 
@@ -78,7 +76,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(UserNotFoundException::new);
 
         user.setToken(tokenService.generateToken(user.getName(), user.getEmail()));
-        user.setLastLogin(ZonedDateTime.now());
+        user.setLastLogin(LocalDateTime.now());
 
         return userRepository.save(user);
     }
@@ -100,16 +98,7 @@ public class UserServiceImpl implements UserService {
      * @return if is valid return true
      */
     private boolean isValidPassword(String password) {
-        return Pattern.matches("^(?=(.*[a-z])*)(?=(.*[A-Z]))(?=(.*\\d){2}).{8,12}+$", password);
-    }
-
-    /**
-     * Check if exist user persisted in db
-     * @param email to find user
-     * @return true if exist
-     */
-    private boolean checkIfUserExist(String email) {
-        return userRepository.existsByEmail(email);
+        return Pattern.matches("(?=(.*[a-z])*)(?=(.*[A-Z]))(?=(.*\\d){2}).{8,12}+$", password);
     }
 
 }

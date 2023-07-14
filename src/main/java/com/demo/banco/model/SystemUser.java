@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -19,10 +20,10 @@ public abstract class SystemUser {
     private String id;
 
     @Column(name = "created_at")
-    private ZonedDateTime created;
+    private LocalDateTime created;
 
     @Column(name = "last_login")
-    private ZonedDateTime lastLogin;
+    private LocalDateTime lastLogin;
 
     @Column(name = "is_active")
     private boolean isActive;
@@ -31,7 +32,7 @@ public abstract class SystemUser {
     @JoinColumn(name = "auth_id", referencedColumnName = "id")
     private AuthInfo authInfo;
 
-    public SystemUser(String password, ZonedDateTime created, boolean isActive) {
+    public SystemUser(String password, LocalDateTime created, boolean isActive) {
         this.id = UUID.randomUUID().toString();
         this.authInfo = new AuthInfo(this, password);
         this.created = created;
@@ -42,7 +43,7 @@ public abstract class SystemUser {
         this.authInfo.setToken(token);
     }
 
-    public void setLastLogin(ZonedDateTime lastLogin) {
+    public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
     }
 

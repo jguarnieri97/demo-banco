@@ -3,6 +3,7 @@ package com.demo.banco.controller.contracts.response;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -17,9 +18,9 @@ public class UserResponse {
 
     private String password;
 
-    private ZonedDateTime created;
+    private String created;
 
-    private ZonedDateTime lastLogin;
+    private String lastLogin;
 
     private String token;
 
