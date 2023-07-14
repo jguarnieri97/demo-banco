@@ -21,15 +21,25 @@ public class UserController {
         this.mapper = mapper;
     }
 
-    @PostMapping
+    @PostMapping("sign-up")
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse registerUser(@RequestBody UserRequest request) {
         User user = userService.registerUser(request);
+        return convertResponse(user);
+    }
+
+    @GetMapping("login")
+    @ResponseStatus(HttpStatus.OK)
+    public UserResponse loginUser(@RequestParam String token) {
+        User user = userService.loginUser(token);
+        return convertResponse(user);
+    }
+
+    private UserResponse convertResponse(User user) {
         UserResponse response = mapper.convertValue(user, UserResponse.class);
         response.setPassword(user.getAuthInfo().getPassword());
         response.setToken(user.getAuthInfo().getToken());
         return response;
-
     }
 
 }

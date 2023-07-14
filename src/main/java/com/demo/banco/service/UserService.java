@@ -6,5 +6,6 @@ import com.demo.banco.model.User;
 public interface UserService {
 
     User registerUser(UserRequest request);
+    User loginUser(String token);
 
 }
