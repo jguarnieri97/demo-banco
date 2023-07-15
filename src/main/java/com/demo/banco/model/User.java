@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

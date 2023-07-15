@@ -15,7 +15,6 @@ import com.demo.banco.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.regex.Pattern;
 
 @Service
