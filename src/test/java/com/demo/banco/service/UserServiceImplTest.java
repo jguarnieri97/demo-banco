@@ -1,12 +1,12 @@
 package com.demo.banco.service;
 
-import com.demo.banco.controller.contracts.request.PhoneRequest;
 import com.demo.banco.controller.contracts.request.UserRequest;
 import com.demo.banco.exceptions.AuthNotFoundException;
 import com.demo.banco.exceptions.RegisterUserException;
 import com.demo.banco.exceptions.UserNotFoundException;
 import com.demo.banco.helpers.Encrypter;
 import com.demo.banco.helpers.TokenService;
+import com.demo.banco.helpers.UserFactory;
 import com.demo.banco.model.AuthInfo;
 import com.demo.banco.model.User;
 import com.demo.banco.persistance.AuthRepository;
@@ -14,15 +14,17 @@ import com.demo.banco.persistance.UserRepository;
 import com.demo.banco.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class UserServiceImplTest {
 
@@ -48,7 +50,7 @@ class UserServiceImplTest {
 
     @Test
     void shouldRegisterNewUser() {
-        UserRequest userRequest = createUserRequest("jdoe@example.com", "abcdefg1H2");
+        UserRequest userRequest = UserFactory.createUserRequest("jdoe@example.com", "abcdefg1H2");
 
         when(encrypter.encryptPassword(userRequest.getPassword())).thenReturn("some password");
         when(tokenService.generateToken(userRequest.getName(), userRequest.getEmail()))
@@ -69,35 +71,35 @@ class UserServiceImplTest {
 
     @Test
     void whenRegisterUser_ifPasswordShort_shouldThrowException() {
-        UserRequest userRequest = createUserRequest("jdoe@example.com", "abc12F");
+        UserRequest userRequest = UserFactory.createUserRequest("jdoe@example.com", "abc12F");
 
         assertThrows(RegisterUserException.class, () -> userService.registerUser(userRequest));
     }
 
     @Test
     void whenRegisterUser_ifPasswordLong_shouldThrowException() {
-        UserRequest userRequest = createUserRequest("jdoe@example.com", "abcdefg1H2abcdfgre");
+        UserRequest userRequest = UserFactory.createUserRequest("jdoe@example.com", "abcdefg1H2abcdfgre");
 
         assertThrows(RegisterUserException.class, () -> userService.registerUser(userRequest));
     }
 
     @Test
     void whenRegisterUser_ifPwNotHaveTwoNumbers_shouldThrowException() {
-        UserRequest userRequest = createUserRequest("jdoe@example.com", "abcdefgH1");
+        UserRequest userRequest = UserFactory.createUserRequest("jdoe@example.com", "abcdefgH1");
 
         assertThrows(RegisterUserException.class, () -> userService.registerUser(userRequest));
     }
 
     @Test
     void whenRegisterUser_ifPwNotHaveCapitalLetter_shouldThrowException() {
-        UserRequest userRequest = createUserRequest("jdoe@example.com", "abcdefgh12");
+        UserRequest userRequest = UserFactory.createUserRequest("jdoe@example.com", "abcdefgh12");
 
         assertThrows(RegisterUserException.class, () -> userService.registerUser(userRequest));
     }
 
     @Test
     void whenRegisterUser_ifEmailNotValid_shouldThrowException() {
-        UserRequest userRequest = createUserRequest("jdoeexample.com", "abcdefg1H2");
+        UserRequest userRequest = UserFactory.createUserRequest("jdoeexample.com", "abcdefg1H2");
 
         assertThrows(RegisterUserException.class, () -> userService.registerUser(userRequest));
     }
@@ -139,12 +141,6 @@ class UserServiceImplTest {
         assertThrows(UserNotFoundException.class, () -> userService.loginUser(LOGIN_TOKEN));
     }
 
-    private UserRequest createUserRequest(String email, String password) {
-        PhoneRequest phoneRequest = new PhoneRequest(1155660088, 11, "AR");
-        List<PhoneRequest> phoneList = new ArrayList<>();
-        phoneList.add(phoneRequest);
-        return new UserRequest("Jane Doe", email, password, phoneList);
-    }
 
 
 }
