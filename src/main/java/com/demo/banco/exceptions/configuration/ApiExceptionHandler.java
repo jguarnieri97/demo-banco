@@ -1,6 +1,5 @@
 package com.demo.banco.exceptions.configuration;
 
-import com.demo.banco.exceptions.RegisterUserException;
 import com.demo.banco.exceptions.ServiceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

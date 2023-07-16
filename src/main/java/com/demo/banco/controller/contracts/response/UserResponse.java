@@ -1,10 +1,7 @@
 package com.demo.banco.controller.contracts.response;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
