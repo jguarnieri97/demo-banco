@@ -10,9 +10,7 @@ import java.util.List;
 public class UserRequest {
 
     private String name;
-    @NonNull
     private String email;
-    @NonNull
     private String password;
     private List<PhoneRequest> phones;
 

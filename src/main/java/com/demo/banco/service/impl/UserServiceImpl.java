@@ -3,6 +3,7 @@ package com.demo.banco.service.impl;
 import com.demo.banco.controller.contracts.request.UserRequest;
 import com.demo.banco.exceptions.AuthNotFoundException;
 import com.demo.banco.exceptions.RegisterUserException;
+import com.demo.banco.exceptions.UserAlreadyExistException;
 import com.demo.banco.exceptions.UserNotFoundException;
 import com.demo.banco.helpers.Encrypter;
 import com.demo.banco.helpers.TokenService;
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserService {
 
         if (!isValidEmail(request.getEmail())) throw new RegisterUserException("Incorrect email");
         if (!isValidPassword(request.getPassword())) throw new RegisterUserException("Incorrect password");
+        if (userRepository.existsByEmail(request.getEmail())) throw new UserAlreadyExistException(request.getEmail());
 
         User user = new User(
                 request.getName(),

@@ -2,6 +2,7 @@ package com.demo.banco.controller;
 
 import com.demo.banco.controller.contracts.request.UserRequest;
 import com.demo.banco.controller.contracts.response.UserResponse;
+import com.demo.banco.exceptions.InvalidUserRequestException;
 import com.demo.banco.model.User;
 import com.demo.banco.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +26,7 @@ public class UserController {
     @PostMapping("sign-up")
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse registerUser(@RequestBody UserRequest request) {
+        if (request.getEmail() == null || request.getPassword() == null) throw new InvalidUserRequestException();
         User user = userService.registerUser(request);
         return convertResponse(user);
     }

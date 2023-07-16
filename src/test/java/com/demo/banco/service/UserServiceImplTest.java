@@ -3,6 +3,7 @@ package com.demo.banco.service;
 import com.demo.banco.controller.contracts.request.UserRequest;
 import com.demo.banco.exceptions.AuthNotFoundException;
 import com.demo.banco.exceptions.RegisterUserException;
+import com.demo.banco.exceptions.UserAlreadyExistException;
 import com.demo.banco.exceptions.UserNotFoundException;
 import com.demo.banco.helpers.Encrypter;
 import com.demo.banco.helpers.TokenService;
@@ -67,6 +68,16 @@ class UserServiceImplTest {
         assertEquals(userRequest.getName(), user.getName());
         assertNotNull(user.getAuthInfo().getPassword());
         assertNotNull(user.getAuthInfo().getToken());
+    }
+
+    @Test
+    void whenRegisterUser_ifAlreadyExistByMail_shouldThrowException() {
+        UserRequest userRequest = UserFactory.createUserRequest("jdoe@example.com", "abcdefg1H2");
+
+        when(userRepository.existsByEmail(userRequest.getEmail()))
+                .thenReturn(true);
+
+        assertThrows(UserAlreadyExistException.class, () -> userService.registerUser(userRequest));
     }
 
     @Test

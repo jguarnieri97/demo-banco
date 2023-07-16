@@ -4,12 +4,14 @@ import com.demo.banco.controller.contracts.request.UserRequest;
 import com.demo.banco.controller.contracts.response.UserResponse;
 import com.demo.banco.helpers.UserFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -23,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles({"test"})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class UserControllerTest {
 
     @Autowired
@@ -45,6 +48,19 @@ class UserControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value(request.getName()))
                 .andExpect(jsonPath("$.token").exists());
+    }
+
+    @Test
+    void givenMailNull_shouldResponseBadRequest() throws Exception {
+        UserRequest request = UserFactory.createUserRequest(null, "abcdef1H2");
+        String jsonBody = objectMapper.writeValueAsString(request);
+
+        this.mockMvc.perform(
+                        post("http://localhost/api/v1/users/sign-up")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonBody))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
     @Test
