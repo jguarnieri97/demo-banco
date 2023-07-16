@@ -1,0 +1,92 @@
+{
+	"info": {
+		"_postman_id": "31f30691-6562-4e18-8659-31d05ad36d5f",
+		"name": "Demo Banco",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28493188"
+	},
+	"item": [
+		{
+			"name": "Crear usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"jdoe@example.com\",\r\n    \"password\": \"a2asfGfdfdf4\",\r\n    \"phones\": [\r\n        {\r\n            \"number\": 1544446666,\r\n            \"citycode\": 11,\r\n            \"contrycode\": \"AR\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/users/sign-up",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Usuario",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/users/login?token=eyJhbGciOiJub25lIn0.eyJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6Impkb2VAZXhhbXBsZS5jb20iLCJzdWIiOiJqZG9lIiwianRpIjoiYzY2YmJkNGUtYTE1My00OTQ0LWE0MWMtNTg4MmFjNzMyOWRkIiwiaWF0IjoxNjg5MjkzMTU1fQ.",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"login"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJub25lIn0.eyJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6Impkb2VAZXhhbXBsZS5jb20iLCJzdWIiOiJqZG9lIiwianRpIjoiYzY2YmJkNGUtYTE1My00OTQ0LWE0MWMtNTg4MmFjNzMyOWRkIiwiaWF0IjoxNjg5MjkzMTU1fQ."
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
