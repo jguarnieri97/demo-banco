@@ -137,7 +137,6 @@ class UserServiceImplTest {
                 .thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () -> userService.loginUser(LOGIN_TOKEN));
-
     }
 
     private UserRequest createUserRequest(String email, String password) {

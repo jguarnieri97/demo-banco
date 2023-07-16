@@ -12,7 +12,6 @@ import java.util.List;
 @Table(name = "BANK_USER")
 @PrimaryKeyJoinColumn(name = "user_id")
 @Getter
-@NoArgsConstructor
 public class User extends SystemUser {
 
     private String name;
@@ -26,6 +25,11 @@ public class User extends SystemUser {
         super(password, created, isActive);
         this.name = name;
         this.email = email;
+        this.phones = new ArrayList<>();
+    }
+
+    public User() {
+        super();
         this.phones = new ArrayList<>();
     }
 

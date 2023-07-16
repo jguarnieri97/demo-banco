@@ -1,0 +1,7 @@
+spring:
+  application.name: demo-banco-api_dev-h2
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: test
+    password: test
