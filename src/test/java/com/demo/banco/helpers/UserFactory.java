@@ -1,7 +1,7 @@
 package com.demo.banco.helpers;
 
-import com.demo.banco.controller.contracts.request.PhoneRequest;
-import com.demo.banco.controller.contracts.request.UserRequest;
+import com.demo.banco.contracts.request.PhoneRequest;
+import com.demo.banco.contracts.request.UserRequest;
 
 import java.util.ArrayList;
 import java.util.List;

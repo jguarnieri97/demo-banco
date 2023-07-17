@@ -1,7 +1,7 @@
 package com.demo.banco.controller;
 
-import com.demo.banco.controller.contracts.request.UserRequest;
-import com.demo.banco.controller.contracts.response.UserResponse;
+import com.demo.banco.contracts.request.UserRequest;
+import com.demo.banco.contracts.response.UserResponse;
 import com.demo.banco.helpers.UserFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;

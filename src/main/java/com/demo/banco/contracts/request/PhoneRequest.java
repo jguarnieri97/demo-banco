@@ -1,4 +1,4 @@
-package com.demo.banco.controller.contracts.request;
+package com.demo.banco.contracts.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

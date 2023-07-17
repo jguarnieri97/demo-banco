@@ -1,6 +1,6 @@
 package com.demo.banco.service.impl;
 
-import com.demo.banco.controller.contracts.request.UserRequest;
+import com.demo.banco.contracts.request.UserRequest;
 import com.demo.banco.exceptions.AuthNotFoundException;
 import com.demo.banco.exceptions.RegisterUserException;
 import com.demo.banco.exceptions.UserAlreadyExistException;
